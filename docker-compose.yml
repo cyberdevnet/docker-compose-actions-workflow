@@ -1,10 +1,11 @@
-version: '3'
+version: "3"
 services:
-  web:
-    container_name: webapp-frontend
-    build: .
+  fastapi:
+    build:
+      dockerfile: ./Dockerfile
+    container_name: fastapi
+    hostname: fastapi
     ports:
-      - "5000:5000"
-  redis:
-    container_name: redis-backend
-    image: "redis:alpine"
+      - 8081:8000
+    restart: always
+    stop_grace_period: 120s

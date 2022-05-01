@@ -1,25 +1,28 @@
-import time
-import redis
-from flask import Flask
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 
-app = Flask(__name__)
-cache = redis.Redis(host='redis', port=6379)
+app = FastAPI(debug=True)
+
+origins = [
+    "http://localhost:3000",
+    "localhost:3000",
+    "http://127.0.0.1:3000",
+    "127.0.0.1:3000",
+    "http://localhost",
+    "http://127.0.0.1"
+]
 
 
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr('hits')
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 
-@app.route('/')
-def hello():
-    count = get_hit_count()
-    return 'Hello World! I have been seen {} times.\n'.format(count)
+@ app.get("/", tags=["root"])
+async def read_root() -> dict:
+    return {"message": "Welcome to docker-compose-actions-workflow"}

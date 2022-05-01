@@ -1,9 +1,15 @@
-FROM python:3.7-alpine
+FROM python:3.9
+
 WORKDIR /code
-ENV FLASK_APP app.py
-ENV FLASK_RUN_HOST 0.0.0.0
-RUN apk add --no-cache gcc musl-dev linux-headers
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["flask", "run"]
+
+ADD ./requirements.txt /code/requirements.txt
+
+
+
+
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+COPY . /code/app
+
+
+CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8081"]
