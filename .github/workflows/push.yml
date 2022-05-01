@@ -8,4 +8,5 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: Test
-        run: docker run --network container:fastapi appropriate/curl -s --retry 10 --retry-connrefused http://http://127.0.0.1:8081/
+        run: docker run --rm appropriate/curl -fsSL http://http://127.0.0.1:8081/
+        # run: docker run --network container:fastapi appropriate/curl -s --retry 10 --retry-connrefused http://http://127.0.0.1:8081/
