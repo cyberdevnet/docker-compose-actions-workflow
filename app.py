@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
 
 
 app = FastAPI(debug=True)
@@ -22,7 +24,16 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+class postData(BaseModel):
+    message: str
+
 
 @ app.get("/", tags=["root"])
 async def read_root() -> dict:
     return {"message": "Welcome to docker-compose-actions-workflow"}
+
+
+@ app.post("/post", tags=["post"])
+async def add_post(data: postData):
+    message = data.message
+    return {"message": message}
