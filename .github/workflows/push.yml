@@ -10,7 +10,7 @@ jobs:
       - name: Test simple GET
         run: docker run --network container:fastapi jwilder/dockerize -wait http://127.0.0.1:8081/ -timeout 120s -wait-retry-interval 5s
       - name: Test curl GET
-        run: docker run --network container:fastapi jwilder/dockerize -X GET http://127.0.0.1:8081
+        run: docker run --network container:fastapi appropriate/curl -X GET http://127.0.0.1:8081
       - name: Test FastAPI docs
         run: docker run --network container:fastapi jwilder/dockerize -wait http://127.0.0.1:8081/docs -timeout 120s -wait-retry-interval 5s
         # run: docker run --network container:fastapi appropriate/curl -s --retry 10 --retry-connrefused http://127.0.0.1:8081/
