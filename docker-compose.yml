@@ -4,9 +4,19 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    container_name: fastapi
+    container_name: fastapi-action-workflow
     hostname: fastapi
     ports:
       - 8081:8000
     restart: always
     stop_grace_period: 120s
+  mongodb:
+    image: mongo:5.0.7
+    container_name: mongodb-action-workflow
+    hostname: mongodb
+    ports:
+      - 27017:27017
+    restart: on-failure
+    stop_grace_period: 120s
+    # volumes:
+    #   - meraki-explorer-mongo-data:/data/db
