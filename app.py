@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import motor.motor_asyncio
 
 
 
@@ -23,6 +24,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+# Initializing MONGODB DataBase
+mongodb_url = "mongodb://mongodb:27017/"
+try:
+    MONGO_DETAILS = mongodb_url
+    client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
+    database = client.action-workflow
+    print("[+] Database connected!", mongodb_url)
+except Exception as error:
+    print('DB error: ', error)
+    print("[+] Database connection error!")
+    print('mongodb_url: ', mongodb_url)
 
 class postData(BaseModel):
     message: str
