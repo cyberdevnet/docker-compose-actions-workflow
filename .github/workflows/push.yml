@@ -18,5 +18,5 @@ jobs:
           docker run --network container:fastapi-action-workflow appropriate/curl  -X POST -H 'Content-type: application/json'
           --data '{"message":"This is a test from Github actions"}' http://127.0.0.1:8081/post
       - name: Test FastAPI docs
-        run: docker run --network container:fastapi jwilder/dockerize -wait http://127.0.0.1:8081/docs -timeout 120s -wait-retry-interval 5s
+        run: docker run --network container:fastapi-action-workflow jwilder/dockerize -wait http://127.0.0.1:8081/docs -timeout 120s -wait-retry-interval 5s
         # run: docker run --network container:fastapi appropriate/curl -s --retry 10 --retry-connrefused http://127.0.0.1:8081/
