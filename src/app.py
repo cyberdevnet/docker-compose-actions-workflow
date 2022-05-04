@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import motor.motor_asyncio
+import os
 
 
 
@@ -25,17 +26,35 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+FASTAPI_ENV_DEFAULT = 'production'
+if os.getenv('FASTAPI_ENV',    FASTAPI_ENV_DEFAULT) == 'development':
+    mongodb_url = "mongodb://localhost:27017/"
+else:
+    mongodb_url = "mongodb://mongodb:27017/"
+
+
+
 # Initializing MONGODB DataBase
-mongodb_url = "mongodb://mongodb:27017/"
+print("Environment is:", os.getenv('FASTAPI_ENV',    FASTAPI_ENV_DEFAULT))
 try:
     MONGO_DETAILS = mongodb_url
     client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
-    database = client.action-workflow
-    print("[+] Database connected!", mongodb_url)
+    
+    database = client.actionworkflowDB
+    print("[+] Database connected to", mongodb_url)
+    players = database.get_collection("players")
+
+    # returned = actionworkflow_collection.find_one()
+    # print(returned)
+    test_collection = {'name': 'Mario','surname': 'Götze','position': 'striker'}
+    players.replace_one({'name': 'Mario','surname': 'Götze','position': 'striker'},test_collection, upsert=True)
+
 except Exception as error:
     print('DB error: ', error)
     print("[+] Database connection error!")
     print('mongodb_url: ', mongodb_url)
+
+
 
 class postData(BaseModel):
     message: str

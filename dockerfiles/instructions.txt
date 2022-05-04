@@ -1,0 +1,8 @@
+docker-compose -f dockerfiles/docker-compose.yml up --build
+
+### manual start fastapi from cmd only ####
+set \"FASTAPI_ENV=development\" && python src/main.py
+
+
+### manual test with ENV ###
+set \"FASTAPI_ENV=development\" && pytest
