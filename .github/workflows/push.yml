@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        run: dockerfiles/docker-compose up -d
+        run: docker-compose -f dockerfiles/docker-compose.yml up -d
       - name: Test telnet mongodb
         run: docker run --network container:fastapi-action-workflow mikesplain/telnet mongodb 27017
       - name: Test simple GET
