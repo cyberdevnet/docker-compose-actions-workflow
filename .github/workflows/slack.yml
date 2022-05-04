@@ -19,4 +19,4 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: abinoda/slack-action@v1.0.7
         with:
-          args: '{"channel":"C03EB3C343T","text":"Hello  world"}'
+          args: '{\"channel\":\"C03EB3C343T\",\"text\":\"Hello world\"}'
