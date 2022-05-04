@@ -19,4 +19,12 @@ jobs:
           --data '{"message":"This is a test from Github actions"}' http://127.0.0.1:8000/post
       - name: Test FastAPI docs
         run: docker run --network container:fastapi-action-workflow jwilder/dockerize -wait http://127.0.0.1:8000/docs -timeout 120s -wait-retry-interval 5s
-        # run: docker run --network container:fastapi appropriate/curl -s --retry 10 --retry-connrefused http://127.0.0.1:8000/
+  slack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: pullreminders/slack-action@master
+        with:
+          args: '{\"channel\":\"C03EB3C343T\",\"text\":\"Hello world\"}'
