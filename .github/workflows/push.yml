@@ -20,6 +20,7 @@ jobs:
       - name: Test FastAPI docs
         run: docker run --network container:fastapi-action-workflow jwilder/dockerize -wait http://127.0.0.1:8000/docs -timeout 120s -wait-retry-interval 5s
   slack:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: 8398a7/action-slack@v3
